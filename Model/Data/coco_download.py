@@ -38,4 +38,4 @@ class DataDownloader:
         test_data_path = './Data/COCO/test2015.zip'
         wget.download(test_data_url, test_data_path)
         with zipfile.ZipFile(test_data_path)as test_zip:
-            test_zip.extractall(path='./Data/COCO/val')
+            test_zip.extractall(path='./Data/COCO/test')
