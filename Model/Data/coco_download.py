@@ -1,7 +1,8 @@
 import os
-import urllib
 import wget
 import zipfile
+import urllib
+
 
 
 class DataDownloader:
@@ -13,9 +14,10 @@ class DataDownloader:
 
 
 
-    def __init__(self) -> None:
+    def __init__(self, data_folder) -> None:
         cwd = os.getcwd()
-        self.data_folder = os.path.join(cwd, 'Data/COCO')
+        # self.data_folder = os.path.join(cwd, 'Data/COCO')
+        self.data_folder = data_folder
         print('COCO folder is at ' + self.data_folder)
 
     def download_all(self) -> None:
@@ -102,12 +104,27 @@ class DataDownloader:
             os.makedirs(des_path)
         file_name = link.split('/')[-1]
         file_path = os.path.join(des_path, file_name)
-        print(file_name + ' will be downloaded at ' + des_path)
-        wget.download(link, file_path)
-        print('File downloaded')
+        if not self.check_if_downloaded:
+            print(file_name + ' will be downloaded at ' + des_path)
+            wget.download(link, file_path)
+            print('File downloaded')
+            print(file_name + ' will be extraxted to ' + des_path)
+            with zipfile.ZipFile(file_path) as zip_object:
+                zip_object.extractall(path=des_path)
+            print('Files are extraxted to ' + des_path)
+        else:
+            print("File is downloaded at" + file_path)
 
-        print(file_name + ' will be extraxted to ' + des_path)
-        with zipfile.ZipFile(file_path) as zip_object:
-            zip_object.extractall(path=des_path)
-        print('Files are extraxted to ' + des_path)
-
+    def check_if_downloaded(self, download_path:str, download_url:str):
+        if os.path.exists(download_path):
+            url_size = urllib.request.urlopen(download_url).length
+            file_size = os.path.getsize(download_path)
+            # Clean partially downloaded file
+            if url_size > file_size:
+                os.remove(download_path)
+                print("Partial file is deleted at " + download_path )
+                return False
+            elif url_size == file_size:
+                print('File is already downloaded at ' + download_path)
+                return True
+        return False
