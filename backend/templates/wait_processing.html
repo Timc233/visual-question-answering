@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VQA_test</title>
+</head>
+<body>
+    <h1>Is processing ...</h1>
+    <script language="javascript" type="text/javascript">
+        var request = false;
+
+        function createRequest(){
+            try{
+                request = new XMLHttpRequest();
+            } catch(trymicrosoft){
+                try{
+                    request = new ActiveXObject("Msxml2.XMLHTTP");
+                }catch(othermicrosoft){
+                    try{
+                        request = new ActiveXObject("Microsoft.XMLHTTP");
+                    }catch(failed){
+                        request = false;
+                    }
+                }
+            }
+
+
+            if(!request)
+            {
+                alert("Error initializing XMLHttpRequest!")
+            }
+        }
+
+        function sendRequest(){
+            createRequest();
+            var url = "http://127.0.0.1:5000";
+            request.open("GET", url, true);
+            request.onreadystatechange = updatePage;
+            request.send(null);
+        }
+
+        function updatePage(){
+            if(request.readyState == 4)
+            if(request.status == 200)
+            {
+
+                var response = request.responseText;
+                alert("Response: " + response);
+            }
+            else
+            {
+                alert("Error: status code is " + request.status);
+            }
+        }
+
+        <a href="/result"><button class='btn btn-default'>Get Result</button></a>
+
+
+    </script>
+</body>
+</html>

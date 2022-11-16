@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File uploader</title>
-  </head>
-  <body>
-    <form
-      action="http://localhost:5000/uploader"
+    <title>VQA_test</title>
+</head>
+<body>
+      <h1>Please upload the quesion in .mav file</h1>
+      <form
+      action="http://localhost:5000/upload_question"
       method="POST"
       enctype="multipart/form-data"
     >
       <input type="file" name="file" />
       <input type="submit" />
     </form>
-  </body>
+</body>
 </html>

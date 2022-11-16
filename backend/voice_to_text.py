@@ -1,4 +1,4 @@
- import speech_recognition as sr
+import speech_recognition as sr
 from gtts import gTTS
 
 
@@ -20,7 +20,7 @@ def voice_to_text(filename):
         audio_data = r.record(source)
         # recognize (convert from speech to text)
         text = r.recognize_google(audio_data)
-        print(text)
+        return(text)
 
 
 if __name__ == "__main__":
