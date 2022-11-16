@@ -8,8 +8,6 @@ import urllib
 class DataDownloader:
 
     # TODO Put every link in init
-    # TODO check file integrity
-    # TODO download after interrupted
 
 
 
