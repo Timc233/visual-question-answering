@@ -60,7 +60,7 @@ def uploader_question():
 
         # run VQA module and get answer in text
         # answer_text = VQA(image_addr, question_text)
-        answer_text = "This is A1 team 2."
+        answer_text = "This is EC601, team 2, VQA project."
 
         # convert text in mp3 voice file
         text_to_voice(answer_text)
