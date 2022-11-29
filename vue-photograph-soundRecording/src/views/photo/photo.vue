@@ -15,7 +15,7 @@
     </video>
     <!--确认-->
     <div class="buttons">
-      <button @click="callCamera">ooemCamera</button>
+      <button @click="callCamera">opencamera</button>
       <button @click="closeCamera">close camera</button>
       <button @click="photograph">take photo</button>
     </div>
@@ -177,7 +177,7 @@ const compressImage = (event) => {
           break;
       }
     } // 调用接口上传
-    // base64 格式   我这是vuex 形式 重点是 canvas.toDataURL('image/jpeg', 1)
+    // base64 格式   vuex 形式 重点是 canvas.toDataURL('image/jpeg', 1)
     // _this.$store.commit('SAVE_FACE_IMAGE_BASE64', canvas.toDataURL('image/jpeg', 1))
     // _this.upAppUserFaceByBase64()
     // 通过文件流格式上传
