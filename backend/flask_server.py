@@ -16,7 +16,7 @@ upload_folder = 'uploads/'
 app.config['UPLOAD_FOLDER'] = upload_folder
 image_addr = None
 question_addr = None
-answer_addr = "answer.mp3"
+answer_addr = ".\\answer.mp3"
 
 if not os.path.exists(upload_folder):
     os.mkdir(upload_folder)
@@ -43,7 +43,7 @@ def uploader_photo():
         # f.save(secure_filename(f.filename))
         image_addr = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
         f.save(image_addr)
-        return render_template('wait_question.html')
+        return jsonify({'response': 'success'})
 
 
 @app.route('/upload_question', methods=['GET', 'POST'])
@@ -65,7 +65,7 @@ def uploader_question():
         # convert text in mp3 voice file
         text_to_voice(answer_text)
 
-        return jsonify({"question": question_text, "answer_text": answer_text, "answer_addr":answer_addr})
+        return send_file(answer_addr)
 
 
 app.run(debug=False)
