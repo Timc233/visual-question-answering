@@ -3,3 +3,4 @@ __pycache__/
 **/COCO/
 .ipynb_checkpoints
 Model/model_playground.ipynb
+*/uploads/*

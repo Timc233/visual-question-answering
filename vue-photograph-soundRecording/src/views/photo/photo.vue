@@ -23,6 +23,7 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue";
+import axios from 'axios'
 const video = ref(null);
 const canvas = ref(null);
 const img = ref(null);
@@ -54,20 +55,70 @@ const photograph = () => {
   ctx.drawImage(video.value, 0, 0, 320, 240);
   // 转base64格式、图片格式转换、图片质量压缩
   let imgBase64 = canvas.value.toDataURL("image/jpg", 0.7); // 由字节转换为KB 判断大小
+  let blob = canvas.value.toBlob((blob) => {
+    var formData = new FormData()
+    formData.append('file', blob)
+    axios({
+      method:'post',
+      url:'http://127.0.0.1:5000/upload_photo',
+      headers:{
+        "Content-type":"multipart/form-data",
+      },
+      data:formData
+    })
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  })
+  // let str = imgBase64.replace("data:image/jpeg;base64,", "");
+  // let strLength = str.length;
+  // let fileLength = parseInt(strLength - (strLength / 8) * 2); // 图片尺寸  用于判断
+  // let size = (fileLength / 1024).toFixed(2);
+  // console.log(size); // 上传拍照信息  调用接口上传图片 .........
 
-  let str = imgBase64.replace("data:image/jpeg;base64,", "");
-  let strLength = str.length;
-  let fileLength = parseInt(strLength - (strLength / 8) * 2); // 图片尺寸  用于判断
-  let size = (fileLength / 1024).toFixed(2);
-  console.log(size); // 上传拍照信息  调用接口上传图片 .........
+  // // 保存到本地
+  // console.log(data.dialogCamera);
+  // data.dialogCamera = false;
+  // let aTag = document.createElement("a");
+  // aTag.href = imgBase64;
+  // aTag.download =  "VQA_image.jpeg";
+  // aTag.click();
 
-  // 保存到本地
-  console.log(data.dialogCamera);
-  data.dialogCamera = false;
-  let aTag = document.createElement("a");
-  aTag.href = imgBase64;
-  aTag.download = new Date().getTime() + ".jpeg";
-  aTag.click();
+  
+
+  // var formData = new FormData()
+  // // formData.append('test_str', "TEST TEST TEST")
+  // // formData.append('file', aTag.download)
+  // formData.append('file', blob)
+
+
+  // axios({
+  //   method:'post',
+  //   url:'http://127.0.0.1:5000/test',
+  //   headers:{
+  //     "Content-type":"multipart/form-data",
+  //   },
+  //   data:formData
+  // })
+  // .then(function (response) {
+  // console.log(JSON.stringify(response.data));
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // })
+
+
+  // canvas.toBlob(function(blob) {
+  //   const formData = new FormData();
+  //   formData.append('file', blob, 'filename.png');
+
+  //   // Post via axios or other transport method
+  //   axios.post('http://127.0.0.1:5000/test', formData);
+  // });
+
 };
 
 // 关闭摄像头
